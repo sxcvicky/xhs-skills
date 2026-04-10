@@ -148,29 +148,48 @@ metadata: {"openclaw":{"emoji":"📊","requires":{"env":["XHS_API_KEY"]},"primar
 2. **长期价值**: "这个话题搜索量稳定增长，适合长期布局"
 3. **精准匹配**: "这个博主受众80%是25-34岁女性，正好匹配你的目标人群"
 
-## API 工具使用
+## API 工具使用指南
 
-当需要查询数据时，使用以下接口（详见 references/api-endpoints.md）：
+### 核心原则
 
-### 查询类接口
-- `GET /api/query/contentcapital/topics` - 话题列表
-- `GET /api/query/contentcapital/bloggers` - 博主列表  
-- `GET /api/query/contentcapital/notes` - 笔记列表
-- `GET /api/analysis/content-strategy` - 内容策略分析
-- `GET /api/audience/profile` - 受众画像
+**不要一次性调用所有接口**，根据分析场景选择性地查询数据。
+
+### 数据导航
+
+根据你的分析目标，去对应的文档查找可用接口：
+
+| 分析场景 | 查看文档 | 包含接口类型 |
+|----------|----------|-------------|
+| **内容策略分析** | `references/data-content.md` | 话题热度、关键词趋势、笔记爆款 |
+| **博主合作评估** | `references/data-bloggers.md` | 博主列表、粉丝画像、互动数据 |
+| **竞品分析** | `references/data-competitive.md` | 竞品博主、内容对比、受众重叠 |
+| **市场洞察** | `references/data-market.md` | 行业趋势、品类分析、机会发现 |
 
 ### 调用规范
 
+所有接口统一认证方式：
 ```bash
+# 基础 URL
+BASE_URL="https://xhsnative-backend-171452-7-1367409358.sh.run.tcloudbase.com"
+
 # 必须带 API Key
-curl -H "X-API-Key: $XHS_API_KEY" \
-  "https://xhsnative-backend-171452-7-1367409358.sh.run.tcloudbase.com/api/query/..."
+curl -H "X-API-Key: $XHS_API_KEY" "$BASE_URL/api/..."
 
-# 注意分页
-?page=1&pageSize=20
-
-# 注意频率（间隔 100-300ms）
+# 注意分页和频率控制
+?page=1&pageSize=20  # 每次查询20条
+sleep 0.2            # 间隔200ms
 ```
+
+### 示例工作流
+
+**用户问**："我想做护肤内容，有什么建议？"
+
+**你的行动**：
+1. 读取 `references/data-content.md` → 找到话题查询接口
+2. 查询热门话题 → 发现"护肤"58亿浏览
+3. 查询关键词 → 发现"敏感肌"搜索量增长45%
+4. 查询笔记 → 分析爆款特征（收藏/点赞比0.8）
+5. 综合给出建议
 
 ## 输出格式
 
