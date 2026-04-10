@@ -11,7 +11,7 @@
 
 ## 不是做什么
 
-❌ 不是 API 文档（接口细节见 `references/api-endpoints.md`）  
+❌ 不是 API 文档（接口细节见 `references/` 分类文档）  
 ❌ 不是爬虫工具（数据已经采集好，直接查询）  
 ❌ 不是数据报表（给出的是洞察，不是数字堆砌）
 
@@ -71,16 +71,10 @@ openclaw skills list --verbose
 
 ## 使用示例
 
-### 查询种子池统计
+### 内容策略分析
 
 ```bash
-curl -X GET "https://xhsnative-backend-171452-7-1367409358.sh.run.tcloudbase.com/api/crawler/mkt/seed-stats" \
-  -H "X-API-Key: $XHS_API_KEY"
-```
-
-### 查询话题列表
-
-```bash
+# 查询热门话题
 curl -X GET "https://xhsnative-backend-171452-7-1367409358.sh.run.tcloudbase.com/api/query/contentcapital/topics?page=1&pageSize=20" \
   -H "X-API-Key: $XHS_API_KEY"
 ```
@@ -89,9 +83,12 @@ curl -X GET "https://xhsnative-backend-171452-7-1367409358.sh.run.tcloudbase.com
 
 ```
 xhs-data-api/
-├── SKILL.md                    # Skill 主文件
+├── SKILL.md                    # Skill 主文件（思维框架）
 ├── references/
-│   └── api-endpoints.md        # 完整接口文档
+│   ├── data-content.md         # 内容策略数据接口
+│   ├── data-bloggers.md        # 博主数据接口
+│   ├── data-competitive.md     # 竞品分析数据接口
+│   └── data-market.md          # 市场洞察数据接口
 └── README.md                   # 本文件
 ```
 
@@ -104,8 +101,8 @@ xhs-data-api/
 - 关键词查询 / keyword search
 - 内容策略 / content strategy
 - 竞品分析 / competitor analysis
-- 种子池 / seed pool
-- 爬虫状态 / crawler status
+- 受众画像 / audience profile
+- 市场趋势 / market trends
 
 ## 许可证
 
