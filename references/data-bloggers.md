@@ -11,10 +11,10 @@
 
 ## 博主查询
 
-### 获取博主列表
+### 获取博主列表（飙升榜）
 
 ```
-GET /api/query/contentcapital/bloggers
+POST /api/v1/discovery/authors/rising
 ```
 
 **参数**:
@@ -25,9 +25,9 @@ GET /api/query/contentcapital/bloggers
 **响应**:
 ```json
 {
-  "code": 200,
+  "success": true,
   "data": {
-    "list": [
+    "authors": [
       {
         "id": 1,
         "userId": "5a2c3e4f5b6c7d8e9f0a1b2c",
@@ -36,8 +36,7 @@ GET /api/query/contentcapital/bloggers
         "noteCount": 356,
         "likeAndCollectCount": 8900000
       }
-    ],
-    "pagination": { ... }
+    ]
   }
 }
 ```
@@ -54,12 +53,12 @@ GET /api/query/contentcapital/bloggers
 ### 获取受众画像
 
 ```
-GET /api/audience/profile
+POST /api/v1/audience/active
 ```
 
 **参数**:
 - `topicId` (number): 话题ID
-- `bloggerId` (number): 博主ID
+- `authorId` (string): 博主ID
 
 **响应**:
 ```json
