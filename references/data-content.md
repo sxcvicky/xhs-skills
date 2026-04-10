@@ -9,23 +9,29 @@
 
 ---
 
-## ⚠️ 参数来源约束（重要）
+## ⚠️ LLM 参数匹配指引
 
-本 API 中 `keyword` 和 `category` 参数有严格来源限制，禁止用户随意填写：
+本 API 中 `keyword` 和 `category` 参数有推荐来源，但 LLM 需要做智能匹配：
 
-| 参数 | 必须来源 | 说明 |
+| 参数 | 推荐来源 | 说明 |
 |------|----------|------|
-| `keyword` | `/api/query/contentcapital/keywords` 返回的 `keywordCode` | 关键词代码，非任意文本 |
-| `category` | 话题/关键词接口返回的 `category` | 类目名称如"彩妆"、"母婴" |
+| `keyword` | `/api/query/contentcapital/keywords` 返回的 `keywordCode` | 关键词代码 |
+| `category` | 话题/关键词接口返回的 `category` | 类目名称 |
 
-**工作流示例**：
+**LLM 智能匹配规则**：
 ```
-1. 用户问："分析美妆行业的护肤趋势"
-2. Agent 先调用 /api/query/contentcapital/keywords?category=美妆&pageSize=10
-3. 返回 keywordCode 列表：["保湿补水", "祛斑", "敏感肌"...]
-4. Agent 选择 "保湿补水"，调用 /api/v1/content/analysis
+1. 用户问："分析华为手机芯片的市场趋势"
+2. LLM 判断：用户想分析"手机芯片"相关趋势
+3. LLM 调用 /api/query/contentcapital/keywords 搜索 "手机芯片"
+4. 返回 keywordCode 列表中找到 "手机芯片"
+5. LLM 使用 "手机芯片" 作为 keyword 参数
 ```
 
+**匹配策略**：
+- 如果用户输入精确匹配到 keywordCode → 直接使用
+- 如果用户输入模糊匹配到 keywordCode → 选择最相近的
+- 如果没有匹配 → 调用 keywords 接口搜索近似词
+- **禁止直接使用用户输入的任意文本作为 keyword**
 ---
 
 ## 话题查询
@@ -164,9 +170,10 @@ POST /api/v1/content/analysis
 - `category` (string): 类目（可选，必须来自话题/关键词接口的 category）
 - `timeRange` (number): 时间范围（天数，默认30）
 
-**⚠️ 约束**：
-- keyword 参数禁止用户随意填写，必须从 `/api/query/contentcapital/keywords` 返回的 keywordCode 中选择
-- 如果用户提供的关键词不在 keywordCode 列表中，需先调用关键词接口查询
+**约束**：
+- LLM 应优先从 keywords 接口获取 keywordCode
+- 如果用户输入不在 keywordCode 中，调用 keywords 接口搜索近似词
+- **禁止直接使用用户输入的任意文本作为 keyword**
 
 **响应**:
 ```json

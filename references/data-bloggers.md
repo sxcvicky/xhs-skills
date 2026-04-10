@@ -9,22 +9,27 @@
 
 ---
 
-## ⚠️ 参数来源约束（重要）
+## ⚠️ LLM 参数匹配指引
 
-本 API 中 `keyword` 参数有严格来源限制，禁止用户随意填写：
+本 API 中 `keyword` 参数有推荐来源，LLM 需要做智能匹配：
 
-| 参数 | 必须来源 | 说明 |
+| 参数 | 推荐来源 | 说明 |
 |------|----------|------|
 | `keyword` | `/api/query/contentcapital/keywords` 返回的 `keywordCode` | 关键词代码 |
 
-**工作流示例**：
+**LLM 智能匹配规则**：
 ```
 1. 用户问："分析美妆博主的表现"
-2. Agent 先调用 /api/query/contentcapital/keywords?category=美妆&pageSize=10
-3. 返回 keywordCode 列表
-4. Agent 选择 keywordCode，调用 /api/v1/audience/active
+2. LLM 判断：用户想分析"美妆"相关博主
+3. LLM 调用 /api/query/contentcapital/keywords?category=美妆&pageSize=10
+4. 返回 keywordCode 列表
+5. LLM 选择合适的 keywordCode（如"保湿补水"）作为参数
 ```
 
+**匹配策略**：
+- 如果用户输入精确/模糊匹配到 keywordCode → 直接使用
+- 如果没有匹配 → 调用 keywords 接口搜索近似词
+- **禁止直接使用用户输入的任意文本作为 keyword**
 ---
 
 ## 博主查询
@@ -39,7 +44,10 @@ POST /api/v1/discovery/authors/rising
 - `keyword` (string): 搜索关键词（**必填**，必须来自 keywords 接口的 keywordCode）
 - `page`, `pageSize`: 分页
 
-**⚠️ 约束**：keyword 必须从 `/api/query/contentcapital/keywords` 返回的 keywordCode 中选择
+**约束**：
+- LLM 应优先从 keywords 接口获取 keywordCode
+- 如果用户输入不在 keywordCode 中，调用 keywords 接口搜索近似词
+- **禁止直接使用用户输入的任意文本作为 keyword**
 
 **响应**:
 ```json
@@ -79,7 +87,10 @@ POST /api/v1/audience/active
 - `keyword` (string): 搜索关键词（**必填**，必须来自 keywords 接口的 keywordCode）
 - `authorId` (string): 博主ID
 
-**⚠️ 约束**：keyword 必须从 `/api/query/contentcapital/keywords` 返回的 keywordCode 中选择
+**约束**：
+- LLM 应优先从 keywords 接口获取 keywordCode
+- 如果用户输入不在 keywordCode 中，调用 keywords 接口搜索近似词
+- **禁止直接使用用户输入的任意文本作为 keyword**
 
 **响应**:
 ```json
