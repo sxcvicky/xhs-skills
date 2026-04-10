@@ -18,9 +18,8 @@ POST /api/v1/discovery/authors/rising
 ```
 
 **参数**:
+- `keyword` (string): 搜索关键词（必填）
 - `page`, `pageSize`: 分页
-- `keyword` (string): 搜索关键词
-- `fansMin` (number): 最小粉丝数
 
 **响应**:
 ```json
@@ -57,7 +56,7 @@ POST /api/v1/audience/active
 ```
 
 **参数**:
-- `topicId` (number): 话题ID
+- `keyword` (string): 搜索关键词（必填）
 - `authorId` (string): 博主ID
 
 **响应**:

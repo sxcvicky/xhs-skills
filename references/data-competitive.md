@@ -18,8 +18,9 @@ POST /api/v1/benchmark/brand-compete
 ```
 
 **参数**:
-- `brandKeyword` (string): 品牌关键词
-- `timeRange` (number): 时间范围（天数）
+- `brandKeyword` (string): 品牌关键词（必填）
+- `category` (string): 类目（必填，如"美妆"）
+- `timeRange` (string): 时间范围（必填，"7" 或 "30"）
 
 **响应**:
 ```json
@@ -46,3 +47,36 @@ POST /api/v1/benchmark/brand-compete
 - 分析品牌竞争格局
 - 找出竞争优势和劣势
 - 制定差异化策略
+
+---
+
+## 市场分析
+
+### 市场供需分析
+
+```
+POST /api/v1/benchmark/market-opportunity
+```
+
+**参数**:
+- `keyword` (string): 关键词（必填）
+- `category` (string): 类目（必填，如"美妆"）
+- `timeRange` (string): 时间范围（"7" 或 "30"）
+
+**响应**:
+```json
+{
+  "success": true,
+  "data": {
+    "data": {
+      "searchNum": 0,
+      "noteNum": 0,
+      "brandNum": 0
+    }
+  }
+}
+```
+
+**使用场景**:
+- 分析市场供需平衡
+- 找出蓝海市场机会

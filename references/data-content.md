@@ -134,9 +134,9 @@ POST /api/v1/content/analysis
 ```
 
 **参数**:
-- `keyword` (string): 关键词
+- `keyword` (string): 关键词（必填）
 - `category` (string): 类目
-- `timeRange` (number): 时间范围（天数）
+- `timeRange` (number): 时间范围（天数，默认30）
 
 **响应**:
 ```json
