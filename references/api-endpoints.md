@@ -6,86 +6,9 @@
 
 ---
 
-## 📡 一、爬虫触发类
+## 🔍 一、数据查询类
 
-### 1.1 触发 MKT 爬虫
-
-```
-POST /api/crawler/mkt/run
-```
-
-**请求体**:
-```json
-{
-  "source": "realtime" | "pgy" | "both",
-  "maxTasks": 5
-}
-```
-
-**响应**:
-```json
-{
-  "code": 200,
-  "message": "MKT 爬虫已触发",
-  "data": { "taskId": "uuid-xxx" }
-}
-```
-
-### 1.2 查询种子池统计
-
-```
-GET /api/crawler/mkt/seed-stats
-```
-
-**响应**:
-```json
-{
-  "code": 200,
-  "data": {
-    "realtime": { "words": 4217, "themes": 15 },
-    "pgy": { "words": 382 }
-  }
-}
-```
-
-### 1.3 查询任务状态
-
-```
-GET /api/crawler/status/:taskId
-```
-
-**响应**:
-```json
-{
-  "code": 200,
-  "data": {
-    "taskId": "uuid-xxx",
-    "status": "running" | "completed" | "failed",
-    "progress": 60,
-    "result": { ... }
-  }
-}
-```
-
-### 1.4 导入登录态
-
-```
-POST /api/crawler/login/import
-```
-
-**请求体**:
-```json
-{
-  "platform": "pgy" | "xiaohongshu",
-  "cookies": "a1=xxx; web_session=xxx; ..."
-}
-```
-
----
-
-## 🔍 二、数据查询类
-
-### 2.1 话题列表
+### 1.1 话题列表
 
 ```
 GET /api/query/contentcapital/topics
@@ -120,7 +43,7 @@ GET /api/query/contentcapital/topics
 }
 ```
 
-### 2.2 关键词列表
+### 1.2 关键词列表
 
 ```
 GET /api/query/contentcapital/keywords
@@ -146,7 +69,7 @@ GET /api/query/contentcapital/keywords
 }
 ```
 
-### 2.3 笔记列表
+### 1.3 笔记列表
 
 ```
 GET /api/query/contentcapital/notes
@@ -177,7 +100,7 @@ GET /api/query/contentcapital/notes
 }
 ```
 
-### 2.4 博主列表
+### 1.4 博主列表
 
 ```
 GET /api/query/contentcapital/bloggers
@@ -210,9 +133,9 @@ GET /api/query/contentcapital/bloggers
 
 ---
 
-## 📊 三、业务分析类
+## 📊 二、业务分析类
 
-### 3.1 内容策略分析
+### 2.1 内容策略分析
 
 ```
 GET /api/analysis/content-strategy
@@ -243,7 +166,7 @@ GET /api/analysis/content-strategy
 }
 ```
 
-### 3.2 受众画像分析
+### 2.2 受众画像分析
 
 ```
 GET /api/audience/profile
@@ -270,7 +193,7 @@ GET /api/audience/profile
 }
 ```
 
-### 3.3 竞品对比分析
+### 2.3 竞品对比分析
 
 ```
 GET /api/benchmark/compare
@@ -301,9 +224,9 @@ GET /api/benchmark/compare
 
 ---
 
-## 🔧 四、辅助接口
+## 🔧 三、辅助接口
 
-### 4.1 健康检查
+### 3.1 健康检查
 
 ```
 GET /api/health
@@ -321,7 +244,7 @@ GET /api/health
 }
 ```
 
-### 4.2 获取 API 文档
+### 3.2 获取 API 文档
 
 ```
 GET /api/docs
