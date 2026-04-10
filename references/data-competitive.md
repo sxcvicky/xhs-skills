@@ -11,29 +11,31 @@
 
 ## 竞品对比
 
-### 竞品对比分析
+### 品牌竞争对标
 
 ```
-GET /api/benchmark/compare
+POST /api/v1/benchmark/brand-compete
 ```
 
 **参数**:
-- `bloggerIds` (string): 博主ID列表，逗号分隔
+- `brandKeyword` (string): 品牌关键词
+- `timeRange` (number): 时间范围（天数）
 
 **响应**:
 ```json
 {
-  "code": 200,
+  "success": true,
   "data": {
-    "comparison": [
+    "brandAnalysis": {
+      "trend": "rising",
+      "competition": "medium",
+      "opportunity": 85
+    },
+    "recommendations": [
       {
-        "bloggerId": "5a2c3e4f5b6c7d8e9f0a1b2c",
-        "nickname": "博主A",
-        "metrics": {
-          "avgLikes": 12500,
-          "avgCollects": 8900,
-          "engagementRate": 8.5
-        }
+        "type": "内容角度",
+        "angle": "敏感肌护肤",
+        "reason": "搜索量上升45%"
       }
     ]
   }
@@ -41,6 +43,6 @@ GET /api/benchmark/compare
 ```
 
 **使用场景**:
-- 对比多个竞品博主表现
-- 分析互动率差异
+- 分析品牌竞争格局
 - 找出竞争优势和劣势
+- 制定差异化策略

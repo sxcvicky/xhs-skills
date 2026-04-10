@@ -88,35 +88,32 @@ GET /api/query/contentcapital/keywords
 
 ---
 
-## 笔记查询
+## 爆款笔记
 
-### 获取笔记列表
+### 获取爆款笔记列表
 
 ```
-GET /api/query/contentcapital/notes
+POST /api/v1/discovery/notes/viral
 ```
 
-**参数**:
-- `page`, `pageSize`: 分页
-- `topicId` (number): 话题ID
-- `keyword` (string): 搜索关键词
+**参数**: 无需参数，返回近期爆款笔记
 
 **响应**:
 ```json
 {
-  "code": 200,
+  "success": true,
   "data": {
-    "list": [
+    "notes": [
       {
-        "id": 1,
-        "noteId": "64f09653000000000200d13f",
-        "title": "敏感肌护肤指南",
-        "likeCount": 12500,
-        "collectCount": 8900,
-        "commentCount": 456
+        "noteId": "6911b1a50000000005013042",
+        "title": "医生，我有点舒服了，我想回家",
+        "author": "皮肤科主任李茜",
+        "likes": 1538730,
+        "reads": 9153351,
+        "publishTime": "2025-11-10",
+        "engagement": 1538730
       }
-    ],
-    "pagination": { ... }
+    ]
   }
 }
 ```
@@ -124,39 +121,32 @@ GET /api/query/contentcapital/notes
 **使用场景**:
 - 分析爆款笔记特征
 - 学习内容角度和标题
-- 计算互动率（收藏/点赞比）
+- 了解用户偏好
 
 ---
 
 ## 内容策略分析
 
-### 综合内容策略分析
+### 品牌内容分析
 
 ```
-GET /api/analysis/content-strategy
+POST /api/v1/content/analysis
 ```
 
 **参数**:
-- `topicId` (number): 话题ID
-- `timeRange` (string): 时间范围 (7d/30d/90d)
+- `keyword` (string): 关键词
+- `category` (string): 类目
+- `timeRange` (number): 时间范围（天数）
 
 **响应**:
 ```json
 {
-  "code": 200,
+  "success": true,
   "data": {
-    "topicAnalysis": {
-      "trend": "rising",
-      "competition": "medium",
-      "opportunity": 85
-    },
-    "contentRecommendations": [
-      {
-        "type": "图文",
-        "angle": "敏感肌秋冬护肤routine",
-        "reason": "搜索量上升45%"
-      }
-    ]
+    "overview": { ... },
+    "propagationTypes": { ... },
+    "hotTopics": { ... },
+    "hotWords": [ ... ]
   }
 }
 ```
@@ -165,3 +155,4 @@ GET /api/analysis/content-strategy
 - 快速获得内容策略建议
 - 了解话题趋势和竞争度
 - 发现内容机会点
+
