@@ -5,7 +5,7 @@ description: >-
   blogger performance, note engagement, and competitive landscape. Use when 
   user asks for content strategy recommendations, audience insights, competitor 
   analysis, or data-driven marketing decisions on XHS platform.
-version: 2.0.0
+version: 2.2.0
 user-invocable: true
 metadata: {"openclaw":{"emoji":"📊","requires":{"env":["XHS_API_KEY"]},"primaryEnv":"XHS_API_KEY"}}
 ---
@@ -111,57 +111,9 @@ curl "https://xhsnative-backend-171452-7-1367409358.sh.run.tcloudbase.com/api/v1
 3. **可执行建议**（具体行动步骤）
 4. **风险提示**（需要注意的问题）
 
-## 接口状态
+## 注意事项
 
-> ✅ **已完成全量接口验证** (2026-04-13)
->
-> 测试环境: `http://localhost:8181` (本地开发) / `https://xhsnative-backend-171452-7-1367409358.sh.run.tcloudbase.com` (云端)
-
-| 层级 | 接口数量 | 已验证 | 可用 | 状态 |
-|------|---------|--------|------|------|
-| Discovery 发现层 | 5 | 5 | 5 | ✅ 全部可用 |
-| Content 内容层 | 5 | 5 | 5 | ✅ 全部可用 |
-| Audience 受众层 | 2 | 2 | 2 | ✅ 全部可用 |
-| Benchmark 对标层 | 4 | 4 | 4 | ✅ 全部可用 |
-| Detail 详情层 | 4 | 4 | 4 | ✅ 全部可用 |
-
-### 接口清单（20个）
-
-**✅ Discovery 发现层 (5个)**:
-- `POST /api/v1/discovery/keywords/hot` - 热门关键词
-- `POST /api/v1/discovery/keywords/rising` - 飙升关键词
-- `POST /api/v1/discovery/topics/hot` - 热门话题
-- `POST /api/v1/discovery/notes/viral` - 爆款笔记
-- `POST /api/v1/discovery/authors/rising` - 涨粉博主
-
-**✅ Content 内容层 (5个)**:
-- `POST /api/v1/content/search` - 内容搜索
-- `POST /api/v1/content/analysis` - 内容聚合分析
-- `POST /api/v1/content/trends` - 内容趋势分析
-- `POST /api/v1/content/attributes` - 属性卖点概览
-- `POST /api/v1/content/attribute-keywords` - 属性关键词明细
-
-**✅ Audience 受众层 (2个)**:
-- `POST /api/v1/audience/active` - 活跃博主
-- `POST /api/v1/audience/profile` - 受众画像
-
-**✅ Benchmark 对标层 (4个)**:
-- `POST /api/v1/benchmark/keyword-race` - 关键词排名竞赛
-- `POST /api/v1/benchmark/market-opportunity` - 市场供需分析
-- `POST /api/v1/benchmark/brand-compete` - 品牌竞争对标
-- `POST /api/v1/benchmark/brand-ranking` - 品牌/SPU排名
-
-**✅ Detail 详情层 (4个)**:
-- `GET /api/v1/content/notes/:noteId` - 笔记详情
-- `GET /api/v1/audience/authors/:authorId` - 博主详情
-- `GET /api/v1/audience/authors/:authorId/content` - 博主内容分析
-- `GET /api/v1/audience/authors/:authorId/fans` - 博主粉丝画像
-
-### 注意事项
-
-1. **数据来源**: 部分接口返回 `dataSource: "lingxi"` 或 `dataSource: "pgy"`，表示数据来自灵犀平台或蒲公英平台
-2. **降级查询**: 博主详情接口支持使用博主昵称作为 authorId，会自动降级到灵犀聚合数据
-3. **空数据**: 当指定类目在数据库中无数据时，返回空数组，这是正常行为
-4. **参数说明**:
-   - `timeRange`: 时间范围，支持 "7" 或 "30" 天
-   - `granularity`: 趋势分析的时间粒度，支持 "day" 或 "week" (注意：不是 interval)
+1. **数据来源**: 部分接口返回 `dataSource: "lingxi"` 或 `dataSource: "pgy"`，表示数据来自不同平台，正常
+2. **降级查询**: 博主详情支持用昵称替代 authorId，会自动降级返回聚合数据
+3. **空数据**: 某类目无数据时返回空数组，属正常行为，换其他类目重试
+4. **参数说明**: `timeRange` 支持 `"7"` 或 `"30"` 天；趋势分析粒度参数是 `granularity`（非 `interval`）
