@@ -42,29 +42,33 @@ metadata: {"openclaw":{"emoji":"📊","requires":{"env":["XHS_API_KEY"]},"primar
 - **认证**: `X-API-Key: YOUR_API_KEY`
 - **健康检查**: `GET /health`
 
-### 接口分层
+### ⚠️ 关键调用规范（必读）
 
-| 层级 | 职责 | 回答的问题 | 接口文档 |
-|------|------|-----------|---------|
-| **Discovery 发现层** | 发现热点趋势 | "发生了什么？" | `references/data-discovery.md` |
-| **Analysis 分析层** | 深度内容分析 | "什么内容有效？为什么？" | `references/data-analysis.md` |
-| **Audience 受众层** | 博主与受众分析 | "谁在互动？" | `references/data-audience.md` |
-| **Benchmark 对标层** | 竞品与市场对标 | "相比如何？" | `references/data-benchmark.md` |
-| **Detail 详情层** | 详情下钻 | "具体细节是什么？" | `references/data-detail.md` |
-
-### 调用规范
+> **所有接口必须使用 POST 方法（除 Detail 层 4 个 GET 接口外）**  
+> **错误用法**: `GET /api/v1/discovery/keywords/hot` → 返回 404/Cannot GET  
+> **正确用法**: `POST /api/v1/discovery/keywords/hot` + JSON Body → 200 OK
 
 ```bash
-# 基础认证
-BASE_URL="https://xhsnative-backend-171452-7-1367409358.sh.run.tcloudbase.com"
-curl -H "X-API-Key: $XHS_API_KEY" "$BASE_URL/api/v1/..."
+# 标准调用模板（Discovery/Analysis/Audience/Benchmark 层）
+curl -X POST "https://xhsnative-backend-171452-7-1367409358.sh.run.tcloudbase.com/api/v1/{layer}/{endpoint}" \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: $XHS_API_KEY" \
+  -d '{"category": "美妆个护", "timeRange": "30"}'
 
-# 分页参数
-?page=1&pageSize=20  # 每次查询20条
-
-# 频率控制
-sleep 0.2  # 间隔200ms
+# Detail 层使用 GET（无请求体）
+curl "https://xhsnative-backend-171452-7-1367409358.sh.run.tcloudbase.com/api/v1/content/notes/{noteId}" \
+  -H "X-API-Key: $XHS_API_KEY"
 ```
+
+### 接口分层
+
+| 层级 | HTTP方法 | 职责 | 接口文档 |
+|------|---------|------|---------|
+| **Discovery 发现层** | **POST** | 发现热点趋势 | `references/data-discovery.md` |
+| **Analysis 分析层** | **POST** | 深度内容分析 | `references/data-analysis.md` |
+| **Audience 受众层** | **POST** | 博主与受众分析 | `references/data-audience.md` |
+| **Benchmark 对标层** | **POST** | 竞品与市场对标 | `references/data-benchmark.md` |
+| **Detail 详情层** | **GET** | 详情下钻（按ID查询） | `references/data-detail.md` |
 
 ## 分析工作流
 
