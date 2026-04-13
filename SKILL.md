@@ -1,10 +1,8 @@
 ---
 name: xhs-data-api
 description: >-
-  Analyze Xiaohongshu (Little Red Book) market data including topic trends, 
-  blogger performance, note engagement, and competitive landscape. Use when 
-  user asks for content strategy recommendations, audience insights, competitor 
-  analysis, or data-driven marketing decisions on XHS platform.
+  小红书市场数据分析，覆盖话题热度、博主表现、笔记互动、竞品格局。
+  当用户询问内容策略建议、受众洞察、竞品分析或小红书营销决策时使用。
 version: 2.2.0
 user-invocable: true
 metadata: {"openclaw":{"emoji":"📊","requires":{"env":["XHS_API_KEY"]},"primaryEnv":"XHS_API_KEY"}}
